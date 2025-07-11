@@ -1,33 +1,59 @@
-# nvim-plugin-template
+# blitzsearch.nvim a NeoVim Extension for Blitz Search
 
-Neovim plugin template; includes automatic documentation generation from README, integration tests with Busted, and linting with Stylua
+If you don't know what Blitz Search is, it's a standalone Free-And-Open-Source tool located here:
 
-## Usage
+https://github.com/Natestah/BlitzSearch
 
-1. Click `use this template` button generate a repo on your github.
-2. Clone your plugin repo. Open terminal then cd plugin directory.
-3. Run `python3 rename.py your-plugin-name`. This will replace all `nvim-plugin-template` to your `plugin-name`. 
-   Then it will prompt you input `y` or `n` to remove example codes in `init.lua` and
-   `test/plugin_spec.lua`. If you are familiar this repo just input `y`. If you are looking at this template for the first time I suggest you inspect the contents. After this step `rename.py` will also auto-remove.
+Extensions for IDE's such as NeoVim, are generally created to interop with the tool, in order to create a Dialogue like experience for each.
 
-Now you have a clean plugin environment. Enjoy!
+## ⚠️Work-in-progress⚠️
 
-## Format
+This has been very my my most challenging update, so bear with me. 
 
-The CI uses `stylua` to format the code; customize the formatting by editing `.stylua.toml`.
+If you are a neovim expert and want to see this through, please do hit me up on discord.. I could use some help!
 
-## Test
+[Join Nathan Silvers' Discord](https://discord.com/invite/UYPwQY9ngm)
 
-See [Running tests locally](https://github.com/nvim-neorocks/nvim-busted-action?tab=readme-ov-file#running-tests-locally)
 
-## CI
+The main problem with this Editor has been my unfamiliarity, the folks who use NeoVim exist on an alternate universe.  I don't even know if most will care to have a full GUI find-in-files dialogue attached to their terminal style editor. I have asked, and the answer is crazy, we have this things where we type in terminal commands and it's really advanced.
 
-- Auto generates doc from README.
-- Runs the [nvim-busted-action](https://github.com/nvim-neorocks/nvim-busted-action) for test.
-- Lints with `stylua`.
+But it has been requested.. So I have to chase it now! 😊
 
-## More
 
-To see this template in action, take a look at my other plugins.
+
+## TODO's:
+* 🔲 Editor Context
+  * ❓ Does VM have workspace? or is it just working dir
+  * 🔲 Get Selected word
+  * 🔲 If not selected, word at caret
+  * 🔲 Write Context to shared Config folder ( poormansipc ) for Blitz Search to parse and act 
+* 🔲 Search This command uses Editor Context to send replace Search Signal to Blitz search
+* 🔲 Replace This command uses Editor Context to send replace signal to Blitz search
+
+* ✅ Basic bootstrap for Blitz Search, Call out Blitz.Exe
+* ✅ Respond to Goto Events from Blitz
+  * ⚠️ Mostly works but occasionally hit swap file warnings, may be resolved with Preview goto when simply selecting
+
+## Setup
+
+Add this to your local setup lua using Lazy or otherwise do the things you do with extensions and dependencies ( You know this stuff better than I do )
+
+
+```lua
+  { "natestah/blitzsearch.nvim", 
+    dependencies = {
+    "rktjmp/fwatch.nvim",
+  }},
+```
+
+and this to your init to bind a key:
+
+⚠️ Search This command, currently simply spawns Blitz.exe.
+
+```lua
+vim.api.nvim_set_keymap('n', '<F8>', "<cmd>lua require('blitzsearch/searchthis').searchthis()<CR>", { noremap = true, silent = true })
+```
+
+
 
 ## License MIT
