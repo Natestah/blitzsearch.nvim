@@ -8,6 +8,9 @@ Extensions for IDE's such as NeoVim, are generally created to interop with the t
 
 ## ⚠️Work-in-progress⚠️
 
+![2025-07-11_12-24-38](https://github.com/user-attachments/assets/ec2a8c7e-7ec2-4ec2-b814-223fc8283fb4)
+
+
 This has been very my my most challenging update, so bear with me. 
 
 If you are a neovim expert and want to see this through, please do hit me up on discord.. I could use some help!
