@@ -24,8 +24,8 @@ But it has been requested.. So I have to chase it now! 😊
 ## TODO's:
 * 🔲 Editor Context
   * ❓ Does VM have workspace? or is it just working dir
-  * 🔲 Get Selected word
-  * 🔲 If not selected, word at caret
+  * ✅ Get Selected word
+  * ✅ If not selected, word at caret
   * 🔲 Write Context to shared Config folder ( poormansipc ) for Blitz Search to parse and act 
 * 🔲 Search This command uses Editor Context to send replace Search Signal to Blitz search
 * 🔲 Replace This command uses Editor Context to send replace signal to Blitz search
@@ -51,7 +51,7 @@ and this to your init to bind a key:
 ⚠️ Search This command, currently simply spawns Blitz.exe.
 
 ```lua
-vim.api.nvim_set_keymap('n', '<F8>', "<cmd>lua require('blitzsearch/searchthis').searchthis()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap({"n", "v"}, '<F8>', "<cmd>lua require('blitzsearch/searchthis').searchthis()<CR>", { noremap = true, silent = true })
 ```
 
 
