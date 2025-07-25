@@ -43,10 +43,7 @@ Add this to your local setup lua using Lazy or otherwise do the things you do wi
 
 
 ```lua
-  { "natestah/blitzsearch.nvim", 
-    dependencies = {
-    "rktjmp/fwatch.nvim",
-  }},
+  { "natestah/blitzsearch.nvim" },
 ```
 
 and this to your init to bind a key:
