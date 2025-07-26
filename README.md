@@ -8,7 +8,7 @@ Extensions for IDE's such as NeoVim, are generally created to interop with the t
 
 ## ⚠️Work-in-progress⚠️
 
-![2025-07-11_12-24-38](https://github.com/user-attachments/assets/ec2a8c7e-7ec2-4ec2-b814-223fc8283fb4)
+![2025-07-26_10-11-13](https://github.com/user-attachments/assets/c3b7f8c2-ff22-4040-b45d-ecc2b738b40e)
 
 
 This has been very my my most challenging update, so bear with me. 
