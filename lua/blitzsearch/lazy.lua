@@ -1,3 +1,3 @@
 return {
-  'natestah/blitzsearch.nvim',
+  'natestah/blitzsearch.nvim'
 }

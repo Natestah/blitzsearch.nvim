@@ -27,14 +27,16 @@ But it has been requested.. So I have to chase it now! 😊
 ## TODO's:
 * 🔲 Editor Context
   * ❓ Does VM have workspace? or is it just working dir
+  * 🔲 Automatically switch the Editor to Nvim with the context
   * ✅ Get Selected word
   * ✅ If not selected, word at caret
-  * 🔲 Write Context to shared Config folder ( poormansipc ) for Blitz Search to parse and act 
-* 🔲 Search This command uses Editor Context to send replace Search Signal to Blitz search
-* 🔲 Replace This command uses Editor Context to send replace signal to Blitz search
+  * ✅ Write Context to shared Config folder ( poormansipc ) for Blitz Search to parse and act 
+* ✅ Search This command uses Editor Context to send replace Search Signal to Blitz search
+* ✅ Replace This command uses Editor Context to send replace signal to Blitz search
 
 * ✅ Basic bootstrap for Blitz Search, Call out Blitz.Exe
 * ✅ Respond to Goto Events from Blitz
+  * 🔲 Work out / handle mode selection ( force mode on selecting results)
   * ⚠️ Mostly works but occasionally hit swap file warnings, may be resolved with Preview goto when simply selecting
 
 ## Setup
@@ -48,11 +50,19 @@ Add this to your local setup lua using Lazy or otherwise do the things you do wi
 
 and this to your init to bind a key:
 
-⚠️ Search This command, currently simply spawns Blitz.exe.
+⚠️ Search This / Replace thiscommand, currently simply spawns Blitz.exe.
 
 ```lua
-vim.api.nvim_set_keymap({"n", "v"}, '<F8>', "<cmd>lua require('blitzsearch/searchthis').searchthis()<CR>", { noremap = true, silent = true })
+-- Search This
+vim.api.nvim_set_keymap( "n", '<F8>', "<cmd>lua require('blitzsearch/searchthis').searchthis()<CR>", { noremap = false, silent = true })
+vim.api.nvim_set_keymap( "v", '<F8>', "<cmd>lua require('blitzsearch/searchthis').searchthis()<CR>", { noremap = true, silent = true })
+
+-- Replace This
+vim.api.nvim_set_keymap( "n", '<F9>', "<cmd>lua require('blitzsearch/searchthis').replacethis()<CR>", { noremap = false, silent = true })
+vim.api.nvim_set_keymap( "v", '<F9>', "<cmd>lua require('blitzsearch/searchthis').replacethis()<CR>", { noremap = true, silent = true })
 ```
+
+❓ I've seen it suggested that you could beind multiple modes with a table instead of a single string for the Key mappings, but I couldn't get that working ( {"n", "v" }) 
 
 
 

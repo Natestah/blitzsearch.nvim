@@ -1,4 +1,5 @@
 local Blitz = require("blitzsearch.blitz")
+local BlitzConfigWatch = require("blitzsearch.blitz_config_watch")
 
 local function run_search_string(searchCommand)
 
@@ -73,23 +74,30 @@ local function getSelectedText()
   return "no_selection"
 end
 
-
-
-local function searchthis()
+local function context_action(action_identifier)
   Blitz.run()
   local mode = vim.api.nvim_get_mode().mode
   if( mode == 'v' or mode == 'V' or mode == "\22" ) then
 
-    print(getSelectedText());
+    local selectedText = getSelectedText()
+    BlitzConfigWatch.WriteCommand(action_identifier, selectedText)
     return true
   end
-  -- print("hi")
   wordUnderCursor = getWordUnderCursor()
-  print(wordUnderCursor)
-
+  BlitzConfigWatch.WriteCommand(action_identifier, "@^" .. wordUnderCursor)
   return true
+end
+
+
+local function searchthis()
+  return context_action("SET_SEARCH")
+end
+
+local function replacethis()
+  return context_action("SET_REPLACE")
 end
 
 return {
   searchthis = searchthis,
+  replacethis = replacethis
 }

@@ -5,13 +5,21 @@
 
 local M = {}
 
+
+
+function M.GetConfigPath()
+  local programfiles = os.getenv("AppData")
+  return programfiles .. "\\NathanSilvers\\POORMANS_IPC\\"
+end
+
+
+
 -- Watch a path for changes, call a callback on every change
 --- @param path string
 --- @param callback function
 function M.watch()
   local handle = vim.uv.new_fs_event()
-  local programfiles = os.getenv("AppData")
-  local shared_config_path = programfiles .. "\\NathanSilvers\\POORMANS_IPC\\"
+  local shared_config_path = M.GetConfigPath();
 
   if handle == nil then
     vim.notify('Error starting watch handle.', vim.log.levels.ERROR)
@@ -43,7 +51,6 @@ function M.watch()
       return
     end
 
-
     local fullpath = vim.fs.normalize(vim.fs.joinpath(shared_config_path, filename))
 
     if string.find(filename, "NVIM_GOTO_JSON", 1, true) ~= nil then
@@ -64,6 +71,17 @@ function M.watch()
   })
 end
 
+function M.WriteCommand(command, searchText)
+  
+  local shared_config_path = M.GetConfigPath();
+  local fullpath = vim.fs.normalize(vim.fs.joinpath(shared_config_path, command .. ".txt"))
+  local file = io.open(fullpath, "w")
+  if file then
+      file:write(searchText)
+      file:close()
+  else
+  end
+end
 
 
 function M.switch_to_file(blitz_command_json_table)
