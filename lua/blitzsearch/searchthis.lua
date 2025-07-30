@@ -1,10 +1,6 @@
 local Blitz = require("blitzsearch.blitz")
 local BlitzConfigWatch = require("blitzsearch.blitz_config_watch")
 
-local function run_search_string(searchCommand)
-
-end
-
 local function getWordUnderCursor() 
   return vim.fn.escape(vim.fn.expand('<cword>'), [[\/]])  
 end
@@ -62,6 +58,24 @@ function selection()
 	end
 end
 
+local function getLastFolderName(path)
+    -- Normalize path separators to forward slashes for consistent processing
+    path = path:gsub("\\", "/")
+
+    -- Remove trailing slashes if present
+    path = path:gsub("/+$", "")
+
+    -- Find the last segment after the last forward slash
+    local lastSegment = path:match(".*/([^/]+)$")
+
+    -- If no slash was found (e.g., "folderName"), then the path itself is the last folder name
+    if not lastSegment then
+        lastSegment = path
+    end
+
+    return lastSegment
+end
+
 
 local function getSelectedText()
   local mode = vim.api.nvim_get_mode().mode
@@ -70,31 +84,72 @@ local function getSelectedText()
   if mode == "v" or mode == "V" or mode == "\\22" then
     return get_visual_selection()
   end
-  -- return vim.fn.getregion(vim.fn.getpos "v", vim.fn.getpos ".", opts)
-  return "no_selection"
+  return ""
 end
+
+local function get_editor_ID()
+  local workingDir = vim.fn.getcwd()
+  local name = getLastFolderName(workingDir)
+  local file_safe_name = string.gsub(workingDir, "\\", "-" )
+  file_safe_name = string.gsub(name, ":", "")
+  file_safe_name = string.gsub(name, "/", "")
+  return {
+    ProcessId = vim.fn.getpid(),
+    EditorId = {
+		Title = name,
+		Identity = file_safe_name,
+		SolutionPath = workingDir
+	},
+    SearchBoxString = workingDir
+	}
+end
+
 
 local function context_action(action_identifier)
   Blitz.run()
+  local data = get_editor_ID()
   local mode = vim.api.nvim_get_mode().mode
   if( mode == 'v' or mode == 'V' or mode == "\22" ) then
 
-    local selectedText = getSelectedText()
-    BlitzConfigWatch.WriteCommand(action_identifier, selectedText)
-    return true
+    data.SearchBoxString = getSelectedText()
+  else
+	data.SearchBoxString = "@^" .. getWordUnderCursor()
   end
-  wordUnderCursor = getWordUnderCursor()
-  BlitzConfigWatch.WriteCommand(action_identifier, "@^" .. wordUnderCursor)
-  return true
+  BlitzConfigWatch.WriteCommand(action_identifier, vim.json.encode(data))
+end
+
+local function send_current_context()
+
+	local workingDir = vim.fn.getcwd()
+	local pid = vim.fn.getpid()
+	-- "Name":"nvim-blitzsearch",
+	-- "SolutionHashFrom":"c:\\nvim-blitzsearch",
+	-- "ExeForIcon":"code.cmd","Folders":["c:\\nvim-blitzsearch"],
+	-- "ProcessIdentity":49664,
+	-- "ProcessPath":"C:\\Users\\Silvers\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+
+
+	local workspace_ID = get_editor_ID()
+	local data = {
+	Name = workspace_ID.EditorId.Title,
+    Folders = {workingDir},
+    ExeForIcon = "nvim.exe",
+    ProcessIdentity = pid
+	}
+	local commandFileName = "WORKSPACE_UPDATE," .. workspace_ID.EditorId.Title .. "," .. workspace_ID.EditorId.Identity
+
+	BlitzConfigWatch.WriteCommand(commandFileName, vim.json.encode(data))
 end
 
 
 local function searchthis()
-  return context_action("SET_SEARCH")
+   send_current_context();
+   return context_action("SET_CONTEXT_SEARCH")
 end
 
 local function replacethis()
-  return context_action("SET_REPLACE")
+   send_current_context();
+  return context_action("SET_CONTEXT_REPLACE")
 end
 
 return {

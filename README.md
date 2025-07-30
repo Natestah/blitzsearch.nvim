@@ -6,51 +6,33 @@ https://github.com/Natestah/BlitzSearch
 
 Extensions for IDE's such as NeoVim, are generally created to interop with the tool, in order to create a Dialogue like experience for each.
 
-## ⚠️Work-in-progress⚠️
 
 ![2025-07-26_10-11-13](https://github.com/user-attachments/assets/c3b7f8c2-ff22-4040-b45d-ecc2b738b40e)
 
 
-This has been very my my most challenging update, so bear with me. 
+# Help Make NVIM + Blitz Search Better
 
-If you are a neovim expert and want to see this through, please do hit me up on discord.. I could use some help!
+If you are a neovim expert and want to see improvements to Blitz Search and its integration please do drop by and chat about it.  I don't know a whole lot about NVIM myself so I'm very open to suggestions and IDEA's, especially simple things like how to make Blitz Search a more hands off the mouse type of experience.
 
 [Join Nathan Silvers' Discord](https://discord.com/invite/UYPwQY9ngm)
 
 
-The main problem with this Editor has been my unfamiliarity, the folks who use NeoVim exist on an alternate universe.  I don't even know if most will care to have a full GUI find-in-files dialogue attached to their terminal style editor. I have asked, and the answer is crazy, we have this things where we type in terminal commands and it's really advanced.
-
-But it has been requested.. So I have to chase it now! 😊
-
-
-
-## TODO's:
-* 🔲 Editor Context
-  * ❓ Does VM have workspace? or is it just working dir
-  * 🔲 Automatically switch the Editor to Nvim with the context
-  * ✅ Get Selected word
-  * ✅ If not selected, word at caret
-  * ✅ Write Context to shared Config folder ( poormansipc ) for Blitz Search to parse and act 
-* ✅ Search This command uses Editor Context to send replace Search Signal to Blitz search
-* ✅ Replace This command uses Editor Context to send replace signal to Blitz search
-
-* ✅ Basic bootstrap for Blitz Search, Call out Blitz.Exe
-* ✅ Respond to Goto Events from Blitz
-  * 🔲 Work out / handle mode selection ( force mode on selecting results)
-  * ⚠️ Mostly works but occasionally hit swap file warnings, may be resolved with Preview goto when simply selecting
-
 ## Setup
 
-Add this to your local setup lua using Lazy or otherwise do the things you do with extensions and dependencies ( You know this stuff better than I do )
+1) Install Blitz Search Standalone tool ( Windows Only ), get it here: 
+    * https://github.com/Natestah/BlitzSearch
+
+2) Add this to your local setup lua using Lazy Nvim config located here:
+    * %localappdata%\nvim\lua\plugins\blitzsearch.lua
 
 
 ```lua
-  { "natestah/blitzsearch.nvim" },
+  return { "natestah/blitzsearch.nvim" }
 ```
 
-and this to your init to bind a key:
+3) Bind Keys
+    * %localappdata%\nvim\init.lua
 
-⚠️ Search This / Replace thiscommand, currently simply spawns Blitz.exe.
 
 ```lua
 -- Search This
@@ -63,6 +45,8 @@ vim.api.nvim_set_keymap( "v", '<F9>', "<cmd>lua require('blitzsearch/searchthis'
 ```
 
 ❓ I've seen it suggested that you could beind multiple modes with a table instead of a single string for the Key mappings, but I couldn't get that working ( {"n", "v" }) 
+
+
 
 
 
