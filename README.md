@@ -6,9 +6,7 @@ https://github.com/Natestah/BlitzSearch
 
 Extensions for IDE's such as NeoVim, are generally created to interop with the tool, in order to create a Dialogue like experience for each.
 
-
-![2025-07-26_10-11-13](https://github.com/user-attachments/assets/c3b7f8c2-ff22-4040-b45d-ecc2b738b40e)
-
+![2025-07-30_10-46-07](https://github.com/user-attachments/assets/e9c97ecb-aef7-4090-9155-62d7a1c4f4f2)
 
 # Help Make NVIM + Blitz Search Better
 
